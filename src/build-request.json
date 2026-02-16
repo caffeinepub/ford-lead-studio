@@ -1,0 +1,173 @@
+{
+  "kind": "build_request",
+  "title": "Ford dealership social content + lead tracking app (manual media + follow-up pipeline)",
+  "projectName": "Ford Lead Studio",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Implement Internet Identity sign-in and restrict the app so only authenticated users can access dealership content and lead management screens.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I need an app that will generate automated social media content for a ford dealership ... optimized to generate, track, and follow up with leads"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated users are prompted to sign in with Internet Identity before seeing the dashboard.",
+        "After sign-in, the UI shows the signed-in principal and a sign-out control.",
+        "All primary pages (content generator, asset library, leads) are inaccessible without authentication."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Create a dealership social media content generator that produces editable, exportable post packages for a Ford dealership using deterministic templates (no external AI calls): platform, campaign objective, model (e.g., F-150/Mustang/Explorer), offer details, tone, CTA, and output fields for caption, hashtags, shot list, and posting checklist.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "generate automated social media content for a ford dealership"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can generate a new content package from a form with at least: platform, model, offer, tone, CTA, and campaign objective.",
+        "Generated content includes at minimum: caption text, hashtag set, and a short creative/shot list.",
+        "User can edit generated fields before saving.",
+        "Saved content packages persist in the backend and reload on refresh.",
+        "User can export/copy the caption + hashtags to clipboard from the UI."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add a 'Video Asset' workflow that supports Sora 2 outputs without integrating Sora 2 directly: allow users to attach externally generated videos to a content package by uploading a video file or by storing an external URL plus metadata (prompt used, duration, aspect ratio, status).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "including videos via sora 2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A content package supports zero or more video assets.",
+        "User can add a video asset by either (a) uploading a file via the frontend UI or (b) entering an external URL.",
+        "Each video asset stores metadata fields including: title, prompt text, duration, aspect ratio, and status (Draft/Ready/Published).",
+        "Video assets are viewable/playable from the content package detail screen.",
+        "No backend code performs calls to Sora 2 or any external AI provider."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Provide lead capture landing pages tied to content packages: generate a shareable landing page link per content package that includes tracking parameters and a lead form (name, phone/email, vehicle interest, timeframe, consent checkbox). Store submissions as leads associated to the originating content package.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "optimized to generate, track, and follow up with leads for people who want to buy cars"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each content package has a unique landing page route that can be shared.",
+        "Landing page includes a lead capture form with required validation and a consent checkbox.",
+        "Submitting the form creates a Lead record linked to the originating content package and captures timestamp + ref/UTM parameters from the URL.",
+        "After submission, the user sees a confirmation screen and the lead appears in the authenticated dashboard leads list.",
+        "Landing pages are publicly accessible (no login) while lead management remains authenticated."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement a lead tracking pipeline (CRM-lite) with statuses and follow-up tasks: New, Contacted, Qualified, Test Drive Scheduled, Won, Lost. Support notes, next follow-up date, and task completion logging per lead.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "track, and follow up with leads"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Leads can be listed, filtered by status, and searched by name/contact.",
+        "A lead detail view shows contact info, vehicle interest, source content package, notes history, and follow-up tasks.",
+        "Users can update lead status and set a next follow-up date.",
+        "Users can add timestamped notes and mark follow-up tasks as completed.",
+        "All lead updates persist in the backend and survive refresh."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Add content-to-lead attribution views: for each content package, display counts of generated leads by status and a simple timeline of lead submissions.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "optimized to generate, track"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Content package detail shows total leads generated and breakdown by lead status.",
+        "A list/timeline shows lead submissions (time + name + status) for that content package.",
+        "Dashboard includes a simple 'Top content by leads' section showing content packages sorted by lead count."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Create a coherent, distinct visual theme appropriate for an automotive dealership marketing tool (not blue/purple): define a consistent color palette, typography scale, spacing, and component styling across all screens.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All primary screens (dashboard, content generator, content detail, leads list, lead detail, landing page) share a consistent theme.",
+        "Theme uses a non-blue/non-purple primary accent and maintains accessible contrast for text and buttons.",
+        "UI uses a consistent layout system (navigation + main content area) and standardized form styling."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Add static generated brand visuals to the frontend and use them in the UI (logo/wordmark and a hero illustration) by placing assets under frontend/public/assets/generated and referencing them directly from the frontend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images exist in frontend/public/assets/generated with the exact filenames specified in image requirements.",
+        "The app uses the logo in the main navigation/header and uses the hero image on the dashboard or landing page.",
+        "Images are served as static assets (no backend image proxying)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not integrate or call Sora 2 (or any external AI/LLM/video generation provider) directly from the frontend or backend; support only manual upload/URL attachment workflows for externally generated videos.",
+    "Do not integrate social media platform APIs (e.g., Instagram/Facebook/Twitter) for auto-posting; content must be generated for manual posting/export.",
+    "Backend must remain a single Motoko actor (no multi-service architecture).",
+    "Authentication must use Internet Identity only."
+  ],
+  "nonGoals": [
+    "Automatic publishing/scheduling to social media platforms.",
+    "Automated AI generation of captions/videos via third-party AI services.",
+    "Email/SMS/push notification sending for follow-ups (store tasks and dates only).",
+    "Integration with external CRMs (Salesforce/HubSpot) or external databases."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Automotive dealership app logo wordmark, clean modern typography, black + warm accent (ford-lead-studio-logo.dim_512x512.png)",
+      "Hero illustration of a modern car showroom with abstract marketing/analytics elements, warm neutral palette (dealership-hero.dim_1600x900.png)"
+    ],
+    "edits": []
+  }
+}

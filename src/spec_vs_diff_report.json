@@ -1,0 +1,79 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-16T21:08:48.949Z",
+  "summary": "Diff implements major pieces of the app (II-based auth gating + dashboard/content/leads routes, deterministic content templates with save, video asset UI, basic theme tokens, and attribution UI). However, at least one explicit requirement is not met (VideoAsset.title), and some added functionality (admin secret initialization/footer referral link) was not requested.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "After sign-in, the UI shows the signed-in principal (not just a user name) and a sign-out control.",
+      "reason": "Sign-out exists, but the header displays only `userProfile.name`; there is no evidence of displaying the authenticated principal string anywhere in the provided diff.",
+      "evidence": [
+        "frontend/src/components/layout/AppHeader.tsx"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Each video asset stores metadata fields including: title, prompt text, duration, aspect ratio, and status (Draft/Ready/Published).",
+      "reason": "Backend `VideoAsset` type and frontend video forms do not include a `title` field; only id/url/prompt/duration/aspectRatio/status are present.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/video/VideoUploadForm.tsx",
+        "frontend/src/components/video/VideoUrlForm.tsx",
+        "frontend/src/components/video/VideoAssetManager.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Admin/secret-token based access-control initialization from a URL parameter (`caffeineAdminToken`) and calling `_initializeAccessControlWithSecret`.",
+      "reason": "BuildRequest requires Internet Identity auth only and does not mention secret-token admin bootstrap via URL params; this is additional auth/ACL behavior not requested.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Footer includes an external referral link to caffeine.ai with UTM parameters.",
+      "reason": "Not requested by the BuildRequest; adds external marketing link behavior.",
+      "evidence": [
+        "frontend/src/components/layout/AppLayout.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/analytics/ContentLeadAttribution.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/layout/AppHeader.tsx",
+    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/src/components/video/VideoAssetManager.tsx",
+    "frontend/src/components/video/VideoUploadForm.tsx",
+    "frontend/src/components/video/VideoUrlForm.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/blobStorage.ts",
+    "frontend/src/lib/templates/contentTemplates.ts",
+    "frontend/src/lib/urlTracking.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/ContentDetailPage.tsx",
+    "frontend/src/pages/ContentGeneratorPage.tsx",
+    "frontend/src/pages/DashboardPage.tsx",
+    "frontend/src/pages/LeadConfirmationPage.tsx",
+    "frontend/src/pages/LeadDetailPage.tsx",
+    "frontend/src/pages/LeadsListPage.tsx",
+    "frontend/src/pages/PublicLandingPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

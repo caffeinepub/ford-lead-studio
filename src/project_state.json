@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "App to automate social media content creation for a Ford dealership (including Sora 2 video generation) optimized for lead generation, tracking, and follow-up for car buyers.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Automotive dealership app logo wordmark, clean modern typography, black + warm accent (ford-lead-studio-logo.dim_512x512.png)\n- Hero illustration of a modern car showroom with abstract marketing/analytics elements, warm neutral palette (dealership-hero.dim_1600x900.png)",
+  "existing_features": [
+    {
+      "id": "feature-implement-internet-identity-sign-in-and-restrict-the-app-so-only-authenticated-users-can-access-dealership-content-and-lead-management-screens",
+      "title": "Implement Internet Identity sign-in and restrict the app so only authenticated users can access dealership content and lead management screens.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-dealership-social-media-content-generator-that-produces-editable-exportable-post-packages-for-a-ford-dealership-using-deterministic-templates-no-external-ai-calls-platform-campaign-objective-model-e-g-f-150-mustang-explorer-offer-details-tone-cta-and-output-fields-for-caption-hashtags-shot-list-and-posting-checklist",
+      "title": "Create a dealership social media content generator that produces editable, exportable post packages for a Ford dealership using deterministic templates (no external AI calls): platform, campaign objective, model (e.g., F-150/Mustang/Explorer), offer details, tone, CTA, and output fields for caption, hashtags, shot list, and posting checklist.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-video-asset-workflow-that-supports-sora-2-outputs-without-integrating-sora-2-directly-allow-users-to-attach-externally-generated-videos-to-a-content-package-by-uploading-a-video-file-or-by-storing-an-external-url-plus-metadata-prompt-used-duration-aspect-ratio-status",
+      "title": "Add a 'Video Asset' workflow that supports Sora 2 outputs without integrating Sora 2 directly: allow users to attach externally generated videos to a content package by uploading a video file or by storing an external URL plus metadata (prompt used, duration, aspect ratio, status).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-lead-capture-landing-pages-tied-to-content-packages-generate-a-shareable-landing-page-link-per-content-package-that-includes-tracking-parameters-and-a-lead-form-name-phone-email-vehicle-interest-timeframe-consent-checkbox-store-submissions-as-leads-associated-to-the-originating-content-package",
+      "title": "Provide lead capture landing pages tied to content packages: generate a shareable landing page link per content package that includes tracking parameters and a lead form (name, phone/email, vehicle interest, timeframe, consent checkbox). Store submissions as leads associated to the originating content package.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-lead-tracking-pipeline-crm-lite-with-statuses-and-follow-up-tasks-new-contacted-qualified-test-drive-scheduled-won-lost-support-notes-next-follow-up-date-and-task-completion-logging-per-lead",
+      "title": "Implement a lead tracking pipeline (CRM-lite) with statuses and follow-up tasks: New, Contacted, Qualified, Test Drive Scheduled, Won, Lost. Support notes, next follow-up date, and task completion logging per lead.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-content-to-lead-attribution-views-for-each-content-package-display-counts-of-generated-leads-by-status-and-a-simple-timeline-of-lead-submissions",
+      "title": "Add content-to-lead attribution views: for each content package, display counts of generated leads by status and a simple timeline of lead submissions.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-coherent-distinct-visual-theme-appropriate-for-an-automotive-dealership-marketing-tool-not-blue-purple-define-a-consistent-color-palette-typography-scale-spacing-and-component-styling-across-all-screens",
+      "title": "Create a coherent, distinct visual theme appropriate for an automotive dealership marketing tool (not blue/purple): define a consistent color palette, typography scale, spacing, and component styling across all screens.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-static-generated-brand-visuals-to-the-frontend-and-use-them-in-the-ui-logo-wordmark-and-a-hero-illustration-by-placing-assets-under-frontend-public-assets-generated-and-referencing-them-directly-from-the-frontend",
+      "title": "Add static generated brand visuals to the frontend and use them in the UI (logo/wordmark and a hero illustration) by placing assets under frontend/public/assets/generated and referencing them directly from the frontend.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Automated social media content generator tailored for a Ford dealership (posts/captions/creative).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Generate dealership marketing videos via Sora 2 integration/workflow.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Lead generation optimization features (CTAs, landing/lead capture hooks) tied to content output.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Lead tracking and follow-up system (capture, track, and follow up with prospective car buyers).",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Ford Lead Studio",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

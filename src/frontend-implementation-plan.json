@@ -1,0 +1,318 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Ford Lead Studio (frontend-only)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Add Internet Identity sign-in, profile setup, and route protection so dealership screens require authentication.",
+      "acceptanceCriteria": [
+        "Unauthenticated users are prompted to sign in with Internet Identity before seeing the dashboard.",
+        "After sign-in, the UI shows the signed-in principal and a sign-out control.",
+        "All primary pages (content generator, asset library, leads) are inaccessible without authentication."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the application shell and routing with protected authenticated routes and public landing routes. Use the selected authorization component patterns (Internet Identity + user profile checks) to gate primary pages. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/AuthGate.tsx",
+          "operation": "create",
+          "description": "Create an auth gate wrapper that uses useInternetIdentity and backend getCallerUserProfile/getCallerUserRole to block access to authenticated screens and show a sign-in prompt when needed. Use the selected authorization component guidance for avoiding profile-setup flash. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Create a first-login profile setup dialog (collect user name) and persist it via saveCallerUserProfile. Use shadcn-ui dialog/form primitives for consistent UI. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create a login/logout button using useInternetIdentity; on logout clear cached app data by clearing the React Query cache. Use the selected authorization component's recommended login/logout behavior. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useCurrentUser.ts",
+          "operation": "create",
+          "description": "Add a React Query hook that fetches getCallerUserProfile and getCallerUserRole from the backend actor and exposes derived isAuthenticated/isReady flags for route gating. Verify the selected authorization component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Ensure the app is wrapped with QueryClientProvider and InternetIdentityProvider (already present), and confirm the App import resolves to the new frontend/src/App.tsx."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Build a deterministic, editable content package generator UI with save/load and clipboard export for manual posting.",
+      "acceptanceCriteria": [
+        "User can generate a new content package from a form with at least: platform, model, offer, tone, CTA, and campaign objective.",
+        "Generated content includes at minimum: caption text, hashtag set, and a short creative/shot list.",
+        "User can edit generated fields before saving.",
+        "Saved content packages persist in the backend and reload on refresh.",
+        "User can export/copy the caption + hashtags to clipboard from the UI."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/templates/contentTemplates.ts",
+          "operation": "create",
+          "description": "Implement deterministic template logic (no external AI calls) that produces caption, hashtags, shot list, and posting checklist based on platform/campaign objective/model/offer/tone/CTA selections."
+        },
+        {
+          "path": "frontend/src/pages/ContentGeneratorPage.tsx",
+          "operation": "create",
+          "description": "Create the content generator screen with a form and generated output editor, using shadcn-ui form controls. Include copy-to-clipboard actions for caption + hashtags. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ContentDetailPage.tsx",
+          "operation": "create",
+          "description": "Create a content package detail screen that loads a package by id, allows editing fields (caption/hashtags/shot list/checklist/offer details) and saving updates via backend capabilities."
+        },
+        {
+          "path": "frontend/src/hooks/useContentPackages.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for listing/fetching content packages and performing create/update operations via the backend actor (e.g., getAllContentPackages/getContentPackage/createContentPackage/updateExternalContentPackage as appropriate for the UI flow)."
+        },
+        {
+          "path": "frontend/src/lib/clipboard.ts",
+          "operation": "create",
+          "description": "Add a small helper to copy text to clipboard and surface success/failure feedback in the UI (no social platform API integration)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the new authenticated routes into navigation: content generator, content list/detail."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add a video asset attachment workflow per content package (upload file or external URL) with metadata and playable viewing.",
+      "acceptanceCriteria": [
+        "A content package supports zero or more video assets.",
+        "User can add a video asset by either (a) uploading a file via the frontend UI or (b) entering an external URL.",
+        "Each video asset stores metadata fields including: title, prompt text, duration, aspect ratio, and status (Draft/Ready/Published).",
+        "Video assets are viewable/playable from the content package detail screen.",
+        "No backend code performs calls to Sora 2 or any external AI provider."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/video/VideoAssetManager.tsx",
+          "operation": "create",
+          "description": "Create a UI section for content package detail to list video assets, add a new asset, update status, and remove assets. Use shadcn-ui components for forms, tabs, and lists. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/video/VideoUploadForm.tsx",
+          "operation": "create",
+          "description": "Implement a file upload form that uses the selected blob-storage component (ExternalBlob) to upload bytes and obtain a direct URL for playback, then persist the resulting URL + metadata by calling the backend saveVideoAsset capability. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/video/VideoUrlForm.tsx",
+          "operation": "create",
+          "description": "Implement an external URL attach form that captures URL + metadata (prompt, duration, aspect ratio, status) and persists it via backend saveExternalVideoAsset/saveVideoAsset capability."
+        },
+        {
+          "path": "frontend/src/lib/blobStorage.ts",
+          "operation": "create",
+          "description": "Add a small helper that wraps blob-storage ExternalBlob creation and progress reporting for video uploads, returning a direct URL for the stored blob. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ContentDetailPage.tsx",
+          "operation": "modify",
+          "description": "Embed the VideoAssetManager into the content package detail screen and render video playback using the stored video URL(s)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Create public lead capture landing pages per content package with UTM/ref tracking, validation, and a confirmation screen; reflect submitted leads in authenticated views.",
+      "acceptanceCriteria": [
+        "Each content package has a unique landing page route that can be shared.",
+        "Landing page includes a lead capture form with required validation and a consent checkbox.",
+        "Submitting the form creates a Lead record linked to the originating content package and captures timestamp + ref/UTM parameters from the URL.",
+        "After submission, the user sees a confirmation screen and the lead appears in the authenticated dashboard leads list.",
+        "Landing pages are publicly accessible (no login) while lead management remains authenticated."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/PublicLandingPage.tsx",
+          "operation": "create",
+          "description": "Create a public landing page route that loads the referenced content package and displays a lead form (name, phone/email, vehicle interest, timeframe, consent checkbox) with client-side validation and UTM/ref capture from URL params."
+        },
+        {
+          "path": "frontend/src/pages/LeadConfirmationPage.tsx",
+          "operation": "create",
+          "description": "Create a public confirmation screen shown after successful lead submission."
+        },
+        {
+          "path": "frontend/src/lib/urlTracking.ts",
+          "operation": "create",
+          "description": "Add utilities to parse and normalize ref/UTM parameters from the URL so they can be included in the lead payload sent to the backend."
+        },
+        {
+          "path": "frontend/src/hooks/useLeads.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for creating leads (createLead) and for listing leads (getLeads/getAllLeads depending on UX), ensuring authenticated screens refresh after new lead creation."
+        },
+        {
+          "path": "frontend/src/pages/ContentDetailPage.tsx",
+          "operation": "modify",
+          "description": "Add a shareable landing page link builder (route + tracking params UI) tied to the current content package for users to copy/share."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire public routes for landing and confirmation pages, and ensure authenticated gating applies only to dashboard/content/leads screens (not public landing routes)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement authenticated lead pipeline UI (list/filter/search, lead detail, status updates, follow-up dates, notes, and task completion logging).",
+      "acceptanceCriteria": [
+        "Leads can be listed, filtered by status, and searched by name/contact.",
+        "A lead detail view shows contact info, vehicle interest, source content package, notes history, and follow-up tasks.",
+        "Users can update lead status and set a next follow-up date.",
+        "Users can add timestamped notes and mark follow-up tasks as completed.",
+        "All lead updates persist in the backend and survive refresh."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/LeadsListPage.tsx",
+          "operation": "create",
+          "description": "Create an authenticated leads list with status filters and search by name/contact, using shadcn-ui table/input/select components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/LeadDetailPage.tsx",
+          "operation": "create",
+          "description": "Create an authenticated lead detail view to show contact info, vehicle interest, source content package, notes history, and follow-up tasks, with controls to update status and next follow-up date."
+        },
+        {
+          "path": "frontend/src/components/leads/LeadNotes.tsx",
+          "operation": "create",
+          "description": "Implement a notes UI that adds timestamped notes via backend addLeadNote and renders notes history."
+        },
+        {
+          "path": "frontend/src/components/leads/LeadStatusAndFollowUp.tsx",
+          "operation": "create",
+          "description": "Implement status update and next follow-up date controls that persist via backend updateLeadStatus (and any available backend capability for follow-up date, if present), with optimistic UI and error handling."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire authenticated routes and navigation entries for leads list and lead detail."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add attribution analytics views showing lead counts by status per content package, a lead submission timeline, and a 'Top content by leads' dashboard section.",
+      "acceptanceCriteria": [
+        "Content package detail shows total leads generated and breakdown by lead status.",
+        "A list/timeline shows lead submissions (time + name + status) for that content package.",
+        "Dashboard includes a simple 'Top content by leads' section showing content packages sorted by lead count."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/analytics/ContentLeadAttribution.tsx",
+          "operation": "create",
+          "description": "Create an attribution panel for the content package detail view that computes lead totals, lead-status breakdown, and a submission timeline using leads data fetched from the backend."
+        },
+        {
+          "path": "frontend/src/pages/ContentDetailPage.tsx",
+          "operation": "modify",
+          "description": "Embed the ContentLeadAttribution panel in the content package detail screen and ensure it updates when leads change."
+        },
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "create",
+          "description": "Create an authenticated dashboard that includes a 'Top content by leads' section (content packages sorted by lead count) and quick navigation into content/leads."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the dashboard as the default authenticated route and ensure it is included in navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement a cohesive non-blue/non-purple dealership marketing theme with consistent layout, typography, spacing, and standardized forms.",
+      "acceptanceCriteria": [
+        "All primary screens (dashboard, content generator, content detail, leads list, lead detail, landing page) share a consistent theme.",
+        "Theme uses a non-blue/non-purple primary accent and maintains accessible contrast for text and buttons.",
+        "UI uses a consistent layout system (navigation + main content area) and standardized form styling."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styles and Tailwind CSS variables for a warm, non-blue/non-purple accent theme (e.g., warm orange/amber + neutral grays) with accessible contrast; align shadcn-ui tokens (background/foreground/primary/accent/etc.). Verify shadcn-ui theming conventions before implementing."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme extensions if needed to support the chosen palette/typography scale consistently across screens while keeping existing shadcn-ui token mapping."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a consistent authenticated layout with header/navigation + main content area and standardized spacing; use shadcn-ui components for nav/buttons where appropriate. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/PublicLandingPage.tsx",
+          "operation": "modify",
+          "description": "Apply the same theme system and shared layout primitives (where appropriate) to the public landing page while keeping it publicly accessible."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Use AppLayout for authenticated routes and ensure consistent layout across dashboard/content/leads pages."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Add generated brand visuals as static assets and use them in the header and dashboard/landing UI.",
+      "acceptanceCriteria": [
+        "Generated images exist in frontend/public/assets/generated with the exact filenames specified in image requirements.",
+        "The app uses the logo in the main navigation/header and uses the hero image on the dashboard or landing page.",
+        "Images are served as static assets (no backend image proxying)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/ford-lead-studio-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated logo wordmark image as a static asset at exactly frontend/public/assets/generated/ford-lead-studio-logo.dim_512x512.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/dealership-hero.dim_1600x900.png",
+          "operation": "create",
+          "description": "Add the generated hero illustration as a static asset at exactly frontend/public/assets/generated/dealership-hero.dim_1600x900.png."
+        },
+        {
+          "path": "frontend/src/components/layout/AppHeader.tsx",
+          "operation": "create",
+          "description": "Create a header that references frontend/public/assets/generated/ford-lead-studio-logo.dim_512x512.png for branding and includes auth controls (login/logout) and primary navigation. Verify shadcn-ui component usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "modify",
+          "description": "Reference frontend/public/assets/generated/dealership-hero.dim_1600x900.png in the dashboard hero/intro section to reinforce branding."
+        },
+        {
+          "path": "frontend/src/pages/PublicLandingPage.tsx",
+          "operation": "modify",
+          "description": "Optionally reuse frontend/public/assets/generated/dealership-hero.dim_1600x900.png on the public landing page for a consistent branded experience while keeping the page lightweight and public."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Integrate AppHeader into the authenticated layout so the logo is consistently visible across authenticated screens."
+        }
+      ]
+    }
+  ]
+}

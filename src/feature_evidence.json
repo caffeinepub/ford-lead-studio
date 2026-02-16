@@ -1,0 +1,191 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-internet-identity-sign-in-and-restrict-the-app-so-only-authenticated-users-can-access-dealership-content-and-lead-management-screens",
+      "featureTitle": "Implement Internet Identity sign-in and restrict the app so only authenticated users can access dealership content and lead management screens.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/components/auth/ProfileSetupDialog.tsx",
+        "frontend/src/main.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-dealership-social-media-content-generator-that-produces-editable-exportable-post-packages-for-a-ford-dealership-using-deterministic-templates-no-external-ai-calls-platform-campaign-objective-model-e-g-f-150-mustang-explorer-offer-details-tone-cta-and-output-fields-for-caption-hashtags-shot-list-and-posting-checklist",
+      "featureTitle": "Create a dealership social media content generator that produces editable, exportable post packages for a Ford dealership using deterministic templates (no external AI calls): platform, campaign objective, model (e.g., F-150/Mustang/Explorer), offer details, tone, CTA, and output fields for caption, hashtags, shot list, and posting checklist.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/lib/templates/contentTemplates.ts",
+        "frontend/src/pages/ContentDetailPage.tsx",
+        "frontend/src/pages/ContentGeneratorPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-video-asset-workflow-that-supports-sora-2-outputs-without-integrating-sora-2-directly-allow-users-to-attach-externally-generated-videos-to-a-content-package-by-uploading-a-video-file-or-by-storing-an-external-url-plus-metadata-prompt-used-duration-aspect-ratio-status",
+      "featureTitle": "Add a 'Video Asset' workflow that supports Sora 2 outputs without integrating Sora 2 directly: allow users to attach externally generated videos to a content package by uploading a video file or by storing an external URL plus metadata (prompt used, duration, aspect ratio, status).",
+      "files": [
+        "frontend/src/components/video/VideoAssetManager.tsx",
+        "frontend/src/components/video/VideoUploadForm.tsx",
+        "frontend/src/components/video/VideoUrlForm.tsx",
+        "frontend/src/lib/blobStorage.ts",
+        "frontend/src/pages/ContentDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-provide-lead-capture-landing-pages-tied-to-content-packages-generate-a-shareable-landing-page-link-per-content-package-that-includes-tracking-parameters-and-a-lead-form-name-phone-email-vehicle-interest-timeframe-consent-checkbox-store-submissions-as-leads-associated-to-the-originating-content-package",
+      "featureTitle": "Provide lead capture landing pages tied to content packages: generate a shareable landing page link per content package that includes tracking parameters and a lead form (name, phone/email, vehicle interest, timeframe, consent checkbox). Store submissions as leads associated to the originating content package.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/lib/urlTracking.ts",
+        "frontend/src/pages/ContentDetailPage.tsx",
+        "frontend/src/pages/LeadConfirmationPage.tsx",
+        "frontend/src/pages/PublicLandingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-lead-tracking-pipeline-crm-lite-with-statuses-and-follow-up-tasks-new-contacted-qualified-test-drive-scheduled-won-lost-support-notes-next-follow-up-date-and-task-completion-logging-per-lead",
+      "featureTitle": "Implement a lead tracking pipeline (CRM-lite) with statuses and follow-up tasks: New, Contacted, Qualified, Test Drive Scheduled, Won, Lost. Support notes, next follow-up date, and task completion logging per lead.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/LeadDetailPage.tsx",
+        "frontend/src/pages/LeadsListPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-content-to-lead-attribution-views-for-each-content-package-display-counts-of-generated-leads-by-status-and-a-simple-timeline-of-lead-submissions",
+      "featureTitle": "Add content-to-lead attribution views: for each content package, display counts of generated leads by status and a simple timeline of lead submissions.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/analytics/ContentLeadAttribution.tsx",
+        "frontend/src/pages/ContentDetailPage.tsx",
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-coherent-distinct-visual-theme-appropriate-for-an-automotive-dealership-marketing-tool-not-blue-purple-define-a-consistent-color-palette-typography-scale-spacing-and-component-styling-across-all-screens",
+      "featureTitle": "Create a coherent, distinct visual theme appropriate for an automotive dealership marketing tool (not blue/purple): define a consistent color palette, typography scale, spacing, and component styling across all screens.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/PublicLandingPage.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-static-generated-brand-visuals-to-the-frontend-and-use-them-in-the-ui-logo-wordmark-and-a-hero-illustration-by-placing-assets-under-frontend-public-assets-generated-and-referencing-them-directly-from-the-frontend",
+      "featureTitle": "Add static generated brand visuals to the frontend and use them in the UI (logo/wordmark and a hero illustration) by placing assets under frontend/public/assets/generated and referencing them directly from the frontend.",
+      "files": [
+        "frontend/src/components/layout/AppHeader.tsx",
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/pages/DashboardPage.tsx",
+        "frontend/src/pages/PublicLandingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
